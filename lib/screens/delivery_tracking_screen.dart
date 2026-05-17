@@ -15,10 +15,21 @@ class DeliveryTrackingScreen extends StatelessWidget {
           backgroundColor: Colors.white,
           elevation: 0,
           leading: IconButton(
-            icon: const Icon(Icons.arrow_back_ios, color: Colors.black, size: 20),
+            icon: const Icon(
+              Icons.arrow_back_ios,
+              color: Colors.black,
+              size: 20,
+            ),
             onPressed: () => Navigator.of(context).pop(),
           ),
-          title: const Text('배송 조회', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black)),
+          title: const Text(
+            '배송 조회',
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+              color: Colors.black,
+            ),
+          ),
           centerTitle: true,
           bottom: PreferredSize(
             preferredSize: const Size.fromHeight(140),
@@ -30,8 +41,14 @@ class DeliveryTrackingScreen extends StatelessWidget {
                   indicatorColor: AppTheme.primary,
                   labelColor: AppTheme.primary,
                   unselectedLabelColor: AppTheme.textHint,
-                  labelStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
-                  unselectedLabelStyle: TextStyle(fontWeight: FontWeight.w500, fontSize: 14),
+                  labelStyle: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 14,
+                  ),
+                  unselectedLabelStyle: TextStyle(
+                    fontWeight: FontWeight.w500,
+                    fontSize: 14,
+                  ),
                   tabs: [
                     Tab(text: '배송 중'),
                     Tab(text: '배송 완료'),
@@ -41,20 +58,15 @@ class DeliveryTrackingScreen extends StatelessWidget {
             ),
           ),
         ),
-        body: Stack(
+        bottomNavigationBar: const CustomBottomNavBar(selectedIndex: 0),
+        body: TabBarView(
           children: [
-            TabBarView(
-              children: [
-                _buildTrackingList(),
-                const Center(child: Text('배송 완료 내역이 없습니다.', style: TextStyle(color: AppTheme.textHint))),
-              ],
-            ),
-            // Custom Bottom Navigation Bar
-            const Positioned(
-              left: 0,
-              right: 0,
-              bottom: 0,
-              child: CustomBottomNavBar(selectedIndex: 0),
+            _buildTrackingList(),
+            const Center(
+              child: Text(
+                '배송 완료 내역이 없습니다.',
+                style: TextStyle(color: AppTheme.textHint),
+              ),
             ),
           ],
         ),
@@ -71,12 +83,26 @@ class DeliveryTrackingScreen extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: const [
-              Text('배송 중', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black)),
+              Text(
+                '배송 중',
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                ),
+              ),
               SizedBox(height: 4),
-              Text('배송 중인 상품이 있어요.', style: TextStyle(fontSize: 14, color: AppTheme.textHint)),
+              Text(
+                '배송 중인 상품이 있어요.',
+                style: TextStyle(fontSize: 14, color: AppTheme.textHint),
+              ),
             ],
           ),
-          const Icon(Icons.local_shipping_outlined, size: 40, color: AppTheme.primary), // TODO: Replace with custom SVG
+          const Icon(
+            Icons.local_shipping_outlined,
+            size: 40,
+            color: AppTheme.primary,
+          ), // TODO: Replace with custom SVG
         ],
       ),
     );
@@ -84,7 +110,7 @@ class DeliveryTrackingScreen extends StatelessWidget {
 
   Widget _buildTrackingList() {
     return ListView(
-      padding: const EdgeInsets.fromLTRB(16, 16, 16, 100), // Space for bottom nav
+      padding: const EdgeInsets.fromLTRB(16, 16, 16, 24),
       children: [
         _buildActiveTrackingCard(),
         const SizedBox(height: 16),
@@ -101,10 +127,10 @@ class DeliveryTrackingScreen extends StatelessWidget {
         border: Border.all(color: AppTheme.borderGray),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
+            color: Colors.black.withValues(alpha: 0.05),
             blurRadius: 2,
             offset: const Offset(0, 1),
-          )
+          ),
         ],
       ),
       child: Column(
@@ -121,15 +147,30 @@ class DeliveryTrackingScreen extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text('주문번호 SG250508172941', style: TextStyle(fontSize: 12, color: AppTheme.textSub)),
+                const Text(
+                  '주문번호 SG250508172941',
+                  style: TextStyle(fontSize: 12, color: AppTheme.textSub),
+                ),
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                  decoration: BoxDecoration(
-                    color: AppTheme.primary.withOpacity(0.1),
-                    borderRadius: BorderRadius.circular(4),
-                    border: Border.all(color: AppTheme.primary.withOpacity(0.2)),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 8,
+                    vertical: 4,
                   ),
-                  child: const Text('배송 중', style: TextStyle(fontSize: 10, color: AppTheme.primary, fontWeight: FontWeight.bold)),
+                  decoration: BoxDecoration(
+                    color: AppTheme.primary.withValues(alpha: 0.1),
+                    borderRadius: BorderRadius.circular(4),
+                    border: Border.all(
+                      color: AppTheme.primary.withValues(alpha: 0.2),
+                    ),
+                  ),
+                  child: const Text(
+                    '배송 중',
+                    style: TextStyle(
+                      fontSize: 10,
+                      color: AppTheme.primary,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                 ),
               ],
             ),
@@ -140,12 +181,29 @@ class DeliveryTrackingScreen extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text('CJ대한통운', style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.black)),
+                const Text(
+                  'CJ대한통운',
+                  style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                  ),
+                ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: const [
-                    Text('송장번호', style: TextStyle(fontSize: 12, color: AppTheme.textHint)),
-                    Text('1234-5678-9101', style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: AppTheme.textSub)),
+                    Text(
+                      '송장번호',
+                      style: TextStyle(fontSize: 12, color: AppTheme.textHint),
+                    ),
+                    Text(
+                      '1234-5678-9101',
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                        color: AppTheme.textSub,
+                      ),
+                    ),
                   ],
                 ),
               ],
@@ -156,9 +214,28 @@ class DeliveryTrackingScreen extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
             child: Column(
               children: [
-                _buildTimelineStep('배송 준비중', '05.08 (수) 11:20', isActive: false, isPast: true, isFirst: true),
-                _buildTimelineStep('배송 중', '05.09 (목) 09:15', isActive: true, isPast: false, isFirst: false),
-                _buildTimelineStep('배송 완료', '예정 05.10 (금)', isActive: false, isPast: false, isFirst: false, isLast: true),
+                _buildTimelineStep(
+                  '배송 준비중',
+                  '05.08 (수) 11:20',
+                  isActive: false,
+                  isPast: true,
+                  isFirst: true,
+                ),
+                _buildTimelineStep(
+                  '배송 중',
+                  '05.09 (목) 09:15',
+                  isActive: true,
+                  isPast: false,
+                  isFirst: false,
+                ),
+                _buildTimelineStep(
+                  '배송 완료',
+                  '예정 05.10 (금)',
+                  isActive: false,
+                  isPast: false,
+                  isFirst: false,
+                  isLast: true,
+                ),
               ],
             ),
           ),
@@ -172,7 +249,14 @@ class DeliveryTrackingScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text('상품 2개', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.black)),
+                const Text(
+                  '상품 2개',
+                  style: TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                  ),
+                ),
                 const SizedBox(height: 12),
                 _buildProductItem('와이드 데님 팬츠', '블루 / M'),
                 const SizedBox(height: 12),
@@ -193,10 +277,10 @@ class DeliveryTrackingScreen extends StatelessWidget {
         border: Border.all(color: AppTheme.borderGray),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
+            color: Colors.black.withValues(alpha: 0.05),
             blurRadius: 2,
             offset: const Offset(0, 1),
-          )
+          ),
         ],
       ),
       child: Column(
@@ -213,15 +297,24 @@ class DeliveryTrackingScreen extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text('주문번호 SG250428129387', style: TextStyle(fontSize: 12, color: AppTheme.textSub)),
+                const Text(
+                  '주문번호 SG250428129387',
+                  style: TextStyle(fontSize: 12, color: AppTheme.textSub),
+                ),
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 8,
+                    vertical: 4,
+                  ),
                   decoration: BoxDecoration(
                     color: AppTheme.surfaceGray,
                     borderRadius: BorderRadius.circular(4),
                     border: Border.all(color: AppTheme.borderGray),
                   ),
-                  child: const Text('배송 준비중', style: TextStyle(fontSize: 10, color: AppTheme.textHint)),
+                  child: const Text(
+                    '배송 준비중',
+                    style: TextStyle(fontSize: 10, color: AppTheme.textHint),
+                  ),
                 ),
               ],
             ),
@@ -234,12 +327,32 @@ class DeliveryTrackingScreen extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Text('배송 업체', style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.black)),
+                    const Text(
+                      '배송 업체',
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      ),
+                    ),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: const [
-                        Text('한진택배', style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: AppTheme.textSub)),
-                        Text('5678-9012-3456', style: TextStyle(fontSize: 12, color: AppTheme.textHint)),
+                        Text(
+                          '한진택배',
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                            color: AppTheme.textSub,
+                          ),
+                        ),
+                        Text(
+                          '5678-9012-3456',
+                          style: TextStyle(
+                            fontSize: 12,
+                            color: AppTheme.textHint,
+                          ),
+                        ),
                       ],
                     ),
                   ],
@@ -263,9 +376,19 @@ class DeliveryTrackingScreen extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(width: 16),
-                    const Text('배송 준비중', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: AppTheme.primary)),
+                    const Text(
+                      '배송 준비중',
+                      style: TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.bold,
+                        color: AppTheme.primary,
+                      ),
+                    ),
                     const Spacer(),
-                    const Text('05.07 (화) 17:30', style: TextStyle(fontSize: 12, color: AppTheme.textHint)),
+                    const Text(
+                      '05.07 (화) 17:30',
+                      style: TextStyle(fontSize: 12, color: AppTheme.textHint),
+                    ),
                   ],
                 ),
               ],
@@ -276,10 +399,19 @@ class DeliveryTrackingScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildTimelineStep(String title, String time, {required bool isActive, required bool isPast, required bool isFirst, bool isLast = false}) {
-    Color dotColor = isActive ? AppTheme.primary : (isPast ? AppTheme.borderGray : AppTheme.surfaceGray);
+  Widget _buildTimelineStep(
+    String title,
+    String time, {
+    required bool isActive,
+    required bool isPast,
+    required bool isFirst,
+    bool isLast = false,
+  }) {
+    Color dotColor = isActive
+        ? AppTheme.primary
+        : (isPast ? AppTheme.borderGray : AppTheme.surfaceGray);
     Color textColor = isActive ? AppTheme.primary : AppTheme.textHint;
-    
+
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -305,7 +437,9 @@ class DeliveryTrackingScreen extends StatelessWidget {
         const SizedBox(width: 16),
         Expanded(
           child: Padding(
-            padding: EdgeInsets.only(bottom: isLast ? 0 : 30.0), // Match line height
+            padding: EdgeInsets.only(
+              bottom: isLast ? 0 : 30.0,
+            ), // Match line height
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -343,15 +477,29 @@ class DeliveryTrackingScreen extends StatelessWidget {
             borderRadius: BorderRadius.circular(4),
             border: Border.all(color: AppTheme.borderGray),
           ),
-          child: const Icon(Icons.image_outlined, size: 24, color: AppTheme.textHint), // TODO: Add actual product image
+          child: const Icon(
+            Icons.image_outlined,
+            size: 24,
+            color: AppTheme.textHint,
+          ), // TODO: Add actual product image
         ),
         const SizedBox(width: 12),
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(title, style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.black)),
+            Text(
+              title,
+              style: const TextStyle(
+                fontSize: 12,
+                fontWeight: FontWeight.bold,
+                color: Colors.black,
+              ),
+            ),
             const SizedBox(height: 4),
-            Text(option, style: const TextStyle(fontSize: 10, color: AppTheme.textHint)),
+            Text(
+              option,
+              style: const TextStyle(fontSize: 10, color: AppTheme.textHint),
+            ),
           ],
         ),
       ],

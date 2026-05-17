@@ -1,30 +1,66 @@
 import 'package:flutter/material.dart';
 
 class AppTheme {
-  static const Color primary = Color(0xFF4C30C3);
-  static const Color primaryDark = Color(0xFF7E22CE);
+  // Colors - Figma 디자인 기반 색상 추출
+  static const Color primaryColor = Color(0xFF6F34FF); // 중앙 아이콘 배경 보라색
+  static const Color primaryLight = Color(0xFFE2D9FF);
+  static const Color primaryExtraLight = Color(0xFFF4F5FA);
+
+  static const Color textPrimary = Color(0xFF111111);
+  static const Color textSecondary = Color(0xFF767676);
   static const Color background = Colors.white;
+
+  static const Color primary = primaryColor;
+  static const Color cartPrimary = Color(0xFF6347C6);
+  static const Color cartPrimarySoft = Color(0xFFEEF2FF);
+  static const Color primaryDark = Color(0xFF7E22CE);
   static const Color surfaceGray = Color(0xFFF3F4F6);
   static const Color surfaceLightGray = Color(0xFFF9FAFB);
   static const Color borderGray = Color(0xFFE5E7EB);
-  
+  static const Color borderSubtle = Color(0xFFF0F0F0);
+
   static const Color textMain = Color(0xFF111827);
   static const Color textSub = Color(0xFF4B5563);
   static const Color textHint = Color(0xFF9CA3AF);
 
   static const Color accentYellow = Color(0xFFFFCC00);
   static const Color statusGreen = Color(0xFF22C55E);
+  static const Color successText = Color(0xFF16A34A);
+  static const Color successSurface = Color(0xFFF0FDF4);
+  static const Color successBorder = Color(0xFFBBF7D0);
 
-  static ThemeData get themeData {
+  static ThemeData get themeData => lightTheme;
+
+  static ThemeData get lightTheme {
     return ThemeData(
       useMaterial3: true,
       colorScheme: ColorScheme.fromSeed(
-        seedColor: primary,
-        background: background,
-        surface: Colors.white,
+        seedColor: primaryColor,
+        primary: primaryColor,
+        surface: background,
       ),
       scaffoldBackgroundColor: background,
       fontFamily: 'Pretendard',
+      appBarTheme: const AppBarTheme(
+        backgroundColor: background,
+        elevation: 0,
+        centerTitle: true,
+        iconTheme: IconThemeData(color: textPrimary),
+        titleTextStyle: TextStyle(
+          color: textPrimary,
+          fontSize: 18,
+          fontWeight: FontWeight.w600,
+        ),
+      ),
+      textTheme: const TextTheme(
+        titleLarge: TextStyle(
+          fontSize: 22,
+          fontWeight: FontWeight.bold,
+          color: textPrimary,
+          letterSpacing: -0.5,
+        ),
+        bodyMedium: TextStyle(fontSize: 16, color: textSecondary),
+      ),
     );
   }
 }

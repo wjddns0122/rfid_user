@@ -119,7 +119,7 @@ class HelpBottomSheet extends StatelessWidget {
         border: Border.all(color: AppTheme.surfaceGray),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
+            color: Colors.black.withValues(alpha: 0.05),
             blurRadius: 6,
             offset: const Offset(0, 4),
           ),
@@ -175,7 +175,7 @@ class HelpBottomSheet extends StatelessWidget {
         border: Border.all(color: AppTheme.surfaceGray),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
+            color: Colors.black.withValues(alpha: 0.05),
             blurRadius: 6,
             offset: const Offset(0, 4),
           ),

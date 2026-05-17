@@ -13,7 +13,11 @@ class PickupDetailScreen extends StatelessWidget {
         backgroundColor: Colors.white,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios, color: Colors.black, size: 20), // TODO: Replace with custom SVG
+          icon: const Icon(
+            Icons.arrow_back_ios,
+            color: Colors.black,
+            size: 20,
+          ), // TODO: Replace with custom SVG
           onPressed: () => Navigator.of(context).pop(),
         ),
         title: const Text(
@@ -26,35 +30,25 @@ class PickupDetailScreen extends StatelessWidget {
         ),
         centerTitle: true,
       ),
-      body: Stack(
-        children: [
-          SingleChildScrollView(
-            padding: const EdgeInsets.only(bottom: 100), // Space for bottom nav
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                _buildStatusSection(),
-                Container(height: 8, color: AppTheme.surfaceLightGray),
-                _buildOrderDetailsSection(),
-                Container(height: 8, color: AppTheme.surfaceLightGray),
-                _buildItemsSection(),
-                const SizedBox(height: 24),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: _buildActionButton(),
-                ),
-                const SizedBox(height: 40),
-              ],
+      bottomNavigationBar: const CustomBottomNavBar(selectedIndex: 0),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.only(bottom: 40),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            _buildStatusSection(),
+            Container(height: 8, color: AppTheme.surfaceLightGray),
+            _buildOrderDetailsSection(),
+            Container(height: 8, color: AppTheme.surfaceLightGray),
+            _buildItemsSection(),
+            const SizedBox(height: 24),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: _buildActionButton(),
             ),
-          ),
-          // Custom Bottom Navigation Bar
-          const Positioned(
-            left: 0,
-            right: 0,
-            bottom: 0,
-            child: CustomBottomNavBar(selectedIndex: 0),
-          ),
-        ],
+            const SizedBox(height: 40),
+          ],
+        ),
       ),
     );
   }
@@ -71,7 +65,11 @@ class PickupDetailScreen extends StatelessWidget {
               children: const [
                 Text(
                   '픽업 준비 완료',
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black),
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                  ),
                 ),
                 SizedBox(height: 4),
                 Text(
@@ -84,7 +82,11 @@ class PickupDetailScreen extends StatelessWidget {
           Stack(
             clipBehavior: Clip.none,
             children: [
-              const Icon(Icons.shopping_bag_outlined, size: 40, color: Colors.black), // TODO: Replace with custom SVG
+              const Icon(
+                Icons.shopping_bag_outlined,
+                size: 40,
+                color: Colors.black,
+              ), // TODO: Replace with custom SVG
               Positioned(
                 right: -4,
                 bottom: -4,
@@ -93,7 +95,11 @@ class PickupDetailScreen extends StatelessWidget {
                     color: Colors.white,
                     shape: BoxShape.circle,
                   ),
-                  child: const Icon(Icons.check_circle, size: 20, color: Colors.black), // TODO: Replace with custom SVG
+                  child: const Icon(
+                    Icons.check_circle,
+                    size: 20,
+                    color: Colors.black,
+                  ), // TODO: Replace with custom SVG
                 ),
               ),
             ],
@@ -119,27 +125,57 @@ class PickupDetailScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text('픽업 장소', style: TextStyle(fontSize: 14, color: AppTheme.textHint)),
+              const Text(
+                '픽업 장소',
+                style: TextStyle(fontSize: 14, color: AppTheme.textHint),
+              ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  const Text('스테이션 게이트 홍대점', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black)),
+                  const Text(
+                    '스테이션 게이트 홍대점',
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                    ),
+                  ),
                   const SizedBox(height: 3),
-                  const Text('서울 마포구 양화로 188 AK 플라자 3F', style: TextStyle(fontSize: 12, color: AppTheme.textHint)),
+                  const Text(
+                    '서울 마포구 양화로 188 AK 플라자 3F',
+                    style: TextStyle(fontSize: 12, color: AppTheme.textHint),
+                  ),
                   const SizedBox(height: 1),
-                  const Text('운영시간 10:00 - 21:00', style: TextStyle(fontSize: 12, color: AppTheme.textSub)),
+                  const Text(
+                    '운영시간 10:00 - 21:00',
+                    style: TextStyle(fontSize: 12, color: AppTheme.textSub),
+                  ),
                   const SizedBox(height: 8),
                   Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 6,
+                    ),
                     decoration: BoxDecoration(
                       border: Border.all(color: AppTheme.borderGray),
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: Row(
                       children: const [
-                        Icon(Icons.location_on, size: 12, color: AppTheme.primaryDark), // TODO: Replace with custom SVG
+                        Icon(
+                          Icons.location_on,
+                          size: 12,
+                          color: AppTheme.primaryDark,
+                        ), // TODO: Replace with custom SVG
                         SizedBox(width: 4),
-                        Text('매장 위치 보기', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: AppTheme.primaryDark)),
+                        Text(
+                          '매장 위치 보기',
+                          style: TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold,
+                            color: AppTheme.primaryDark,
+                          ),
+                        ),
                       ],
                     ),
                   ),
@@ -161,7 +197,10 @@ class PickupDetailScreen extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(label, style: const TextStyle(fontSize: 14, color: AppTheme.textHint)),
+        Text(
+          label,
+          style: const TextStyle(fontSize: 14, color: AppTheme.textHint),
+        ),
         Text(
           value,
           style: TextStyle(
@@ -180,7 +219,14 @@ class PickupDetailScreen extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text('상품 2개', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black)),
+          const Text(
+            '상품 2개',
+            style: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+              color: Colors.black,
+            ),
+          ),
           const SizedBox(height: 16),
           _buildProductItem(
             title: '오버핏 블레이저',
@@ -198,7 +244,11 @@ class PickupDetailScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildProductItem({required String title, required String option, required String price}) {
+  Widget _buildProductItem({
+    required String title,
+    required String option,
+    required String price,
+  }) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -209,18 +259,38 @@ class PickupDetailScreen extends StatelessWidget {
             color: AppTheme.surfaceLightGray,
             borderRadius: BorderRadius.circular(6),
           ),
-          child: const Icon(Icons.image_outlined, color: AppTheme.textHint), // TODO: Add actual product image
+          child: const Icon(
+            Icons.image_outlined,
+            color: AppTheme.textHint,
+          ), // TODO: Add actual product image
         ),
         const SizedBox(width: 16),
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(title, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.black)),
+              Text(
+                title,
+                style: const TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                ),
+              ),
               const SizedBox(height: 4),
-              Text(option, style: const TextStyle(fontSize: 12, color: AppTheme.textHint)),
+              Text(
+                option,
+                style: const TextStyle(fontSize: 12, color: AppTheme.textHint),
+              ),
               const SizedBox(height: 8),
-              Text(price, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.black)),
+              Text(
+                price,
+                style: const TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                ),
+              ),
             ],
           ),
         ),
@@ -237,16 +307,20 @@ class PickupDetailScreen extends StatelessWidget {
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.1),
+            color: Colors.black.withValues(alpha: 0.1),
             blurRadius: 15,
             offset: const Offset(0, 10),
-          )
+          ),
         ],
       ),
       alignment: Alignment.center,
       child: const Text(
         '픽업 완료하기',
-        style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white),
+        style: TextStyle(
+          fontSize: 16,
+          fontWeight: FontWeight.bold,
+          color: Colors.white,
+        ),
       ),
     );
   }
