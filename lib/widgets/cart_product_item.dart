@@ -43,7 +43,7 @@ class CartProductItem extends StatelessWidget {
             onTap: onToggleSelected,
           ),
         ),
-        _ProductImagePlaceholder(icon: placeholderIcon),
+        _ProductImagePlaceholder(title: title),
         const SizedBox(width: 16),
         Expanded(
           child: Column(
@@ -134,12 +134,13 @@ class _SelectedCheck extends StatelessWidget {
 }
 
 class _ProductImagePlaceholder extends StatelessWidget {
-  final IconData icon;
+  final String title;
 
-  const _ProductImagePlaceholder({required this.icon});
+  const _ProductImagePlaceholder({required this.title});
 
   @override
   Widget build(BuildContext context) {
+    final imageUrl = AppTheme.getProductImageUrl(title);
     return Container(
       width: 80,
       height: 96,
@@ -148,35 +149,44 @@ class _ProductImagePlaceholder extends StatelessWidget {
         borderRadius: BorderRadius.circular(6),
       ),
       clipBehavior: Clip.antiAlias,
-      child: Stack(
-        fit: StackFit.expand,
-        children: [
-          DecoratedBox(
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: [
-                  AppTheme.textMain.withValues(alpha: 0.9),
-                  AppTheme.textSub.withValues(alpha: 0.5),
-                ],
+      child: Image.network(
+        imageUrl,
+        fit: BoxFit.cover,
+        loadingBuilder: (context, child, loadingProgress) {
+          if (loadingProgress == null) return child;
+          return Center(
+            child: SizedBox(
+              width: 20,
+              height: 20,
+              child: CircularProgressIndicator(
+                strokeWidth: 2.0,
+                value: loadingProgress.expectedTotalBytes != null
+                    ? loadingProgress.cumulativeBytesLoaded /
+                        loadingProgress.expectedTotalBytes!
+                    : null,
+                color: AppTheme.primary.withValues(alpha: 0.5),
               ),
             ),
-          ),
-          Icon(icon, size: 34, color: Colors.white.withValues(alpha: 0.72)),
-          const Positioned(
-            left: 6,
-            right: 6,
-            bottom: 6,
-            child: Text(
-              'TODO: Figma product asset',
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 6, color: Colors.white70),
+          );
+        },
+        errorBuilder: (context, error, stackTrace) => Stack(
+          fit: StackFit.expand,
+          children: [
+            DecoratedBox(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: [
+                    AppTheme.textMain.withValues(alpha: 0.9),
+                    AppTheme.textSub.withValues(alpha: 0.5),
+                  ],
+                ),
+              ),
             ),
-          ),
-        ],
+            const Icon(Icons.image_outlined, size: 34, color: Colors.white70),
+          ],
+        ),
       ),
     );
   }

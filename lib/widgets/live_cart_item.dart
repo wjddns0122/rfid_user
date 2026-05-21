@@ -32,16 +32,38 @@ class LiveCartItem extends StatelessWidget {
           Expanded(
             child: Row(
               children: [
-                // Product Image Placeholder
+                // Product Image
                 Container(
                   width: 56,
                   height: 56,
                   decoration: BoxDecoration(
                     color: AppTheme.surfaceGray,
                     borderRadius: BorderRadius.circular(8),
+                    border: Border.all(color: AppTheme.borderGray),
                   ),
-                  // TODO: Add actual product image
-                  child: const Icon(Icons.image_outlined, color: AppTheme.textHint), 
+                  clipBehavior: Clip.antiAlias,
+                  child: Image.network(
+                    AppTheme.getProductImageUrl(title),
+                    fit: BoxFit.cover,
+                    loadingBuilder: (context, child, loadingProgress) {
+                      if (loadingProgress == null) return child;
+                      return Center(
+                        child: SizedBox(
+                          width: 14,
+                          height: 14,
+                          child: CircularProgressIndicator(
+                            strokeWidth: 1.5,
+                            color: AppTheme.primary.withValues(alpha: 0.5),
+                          ),
+                        ),
+                      );
+                    },
+                    errorBuilder: (context, error, stackTrace) => const Icon(
+                      Icons.image_outlined,
+                      color: AppTheme.textHint,
+                      size: 20,
+                    ),
+                  ),
                 ),
                 const SizedBox(width: 12),
                 Expanded(

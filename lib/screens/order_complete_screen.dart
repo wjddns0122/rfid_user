@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../theme/app_theme.dart';
 import '../widgets/custom_bottom_nav_bar.dart';
+import 'pickup_rfid_screen.dart';
 
 class OrderCompleteScreen extends StatelessWidget {
   const OrderCompleteScreen({super.key});
@@ -248,29 +249,36 @@ class _OrderHistoryButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.symmetric(vertical: 15),
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        border: Border.all(color: AppTheme.borderGray),
-        borderRadius: BorderRadius.circular(12),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.05),
-            blurRadius: 2,
-            offset: const Offset(0, 1),
+    return GestureDetector(
+      onTap: () {
+        Navigator.of(context).push(
+          MaterialPageRoute(builder: (context) => const PickupRfidScreen()),
+        );
+      },
+      child: Container(
+        width: double.infinity,
+        padding: const EdgeInsets.symmetric(vertical: 15),
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          border: Border.all(color: AppTheme.borderGray),
+          borderRadius: BorderRadius.circular(12),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withValues(alpha: 0.05),
+              blurRadius: 2,
+              offset: const Offset(0, 1),
+            ),
+          ],
+        ),
+        child: const Text(
+          '픽업 하러 가기',
+          style: TextStyle(
+            fontSize: 14,
+            height: 20 / 14,
+            fontWeight: FontWeight.w600,
+            color: Color(0xFF374151),
           ),
-        ],
-      ),
-      child: const Text(
-        '주문 내역 확인',
-        style: TextStyle(
-          fontSize: 14,
-          height: 20 / 14,
-          fontWeight: FontWeight.w600,
-          color: Color(0xFF374151),
         ),
       ),
     );

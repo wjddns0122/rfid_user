@@ -258,11 +258,30 @@ class PickupDetailScreen extends StatelessWidget {
           decoration: BoxDecoration(
             color: AppTheme.surfaceLightGray,
             borderRadius: BorderRadius.circular(6),
+            border: Border.all(color: AppTheme.borderGray),
           ),
-          child: const Icon(
-            Icons.image_outlined,
-            color: AppTheme.textHint,
-          ), // TODO: Add actual product image
+          clipBehavior: Clip.antiAlias,
+          child: Image.network(
+            AppTheme.getProductImageUrl(title),
+            fit: BoxFit.cover,
+            loadingBuilder: (context, child, loadingProgress) {
+              if (loadingProgress == null) return child;
+              return Center(
+                child: SizedBox(
+                  width: 20,
+                  height: 20,
+                  child: CircularProgressIndicator(
+                    strokeWidth: 2,
+                    color: AppTheme.primary.withValues(alpha: 0.5),
+                  ),
+                ),
+              );
+            },
+            errorBuilder: (context, error, stackTrace) => const Icon(
+              Icons.image_outlined,
+              color: AppTheme.textHint,
+            ),
+          ),
         ),
         const SizedBox(width: 16),
         Expanded(

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'order_confirmation_screen.dart';
+import 'pickup_rfid_screen.dart';
 import '../theme/app_theme.dart';
 import '../widgets/custom_bottom_nav_bar.dart';
 
@@ -21,7 +21,7 @@ class _PickupDeliveryScreenState extends State<PickupDeliveryScreen> {
       backgroundColor: Colors.white,
       bottomNavigationBar: CustomBottomNavBar(
         selectedIndex: 1,
-        topChild: _NextActionBar(onPressed: _openOrderConfirmation),
+        topChild: _NextActionBar(onPressed: _openPickupRfid),
       ),
       body: SafeArea(
         bottom: false,
@@ -82,9 +82,9 @@ class _PickupDeliveryScreenState extends State<PickupDeliveryScreen> {
     );
   }
 
-  void _openOrderConfirmation() {
+  void _openPickupRfid() {
     Navigator.of(context).push(
-      MaterialPageRoute(builder: (context) => const OrderConfirmationScreen()),
+      MaterialPageRoute(builder: (context) => const PickupRfidScreen()),
     );
   }
 }
@@ -134,7 +134,7 @@ class _OrderStepIndicator extends StatelessWidget {
       child: SizedBox(
         width: 256,
         child: Row(
-          children: List.generate(7, (index) {
+          children: List.generate(5, (index) {
             if (index.isOdd) {
               final completed = index < (currentStep - 1) * 2;
               return Expanded(
@@ -420,7 +420,7 @@ class _PickupTimeRow extends StatelessWidget {
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  '최소 30분 ~ 최대 2시간 소요',
+                  '최소 5분 ~ 최대 15분 소요',
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
                     fontSize: 12,
                     height: 16 / 12,

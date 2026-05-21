@@ -63,4 +63,18 @@ class AppTheme {
       ),
     );
   }
+
+  static String getProductImageUrl(String title) {
+    if (title.contains('블레이저') || title.contains('재킷') || title.contains('아우터')) {
+      return 'https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=500';
+    } else if (title.contains('후드') || title.contains('스웨트셔츠') || title.contains('티셔츠')) {
+      return 'https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=500';
+    } else if (title.contains('팬츠') || title.contains('데님') || title.contains('바지')) {
+      return 'https://images.unsplash.com/photo-1542272604-787c3835535d?w=500';
+    } else if (title.contains('볼캡') || title.contains('모자') || title.contains('캡')) {
+      return 'https://images.unsplash.com/photo-1588850561407-ed78c282e89b?w=500';
+    }
+    // Fallback general clothing image
+    return 'https://images.unsplash.com/photo-1489987707025-afc232f7ea0f?w=500';
+  }
 }

@@ -179,7 +179,7 @@ class _StepIndicator extends StatelessWidget {
       child: SizedBox(
         width: 240,
         child: Row(
-          children: List.generate(7, (index) {
+          children: List.generate(5, (index) {
             if (index.isOdd) {
               return const Expanded(
                 child: Padding(
