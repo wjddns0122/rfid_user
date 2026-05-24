@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
+import '../services/scan_log.dart';
 import '../theme/app_theme.dart';
 
 class PickupRfidScreen extends StatefulWidget {
@@ -105,7 +106,7 @@ class _PickupRfidScreenState extends State<PickupRfidScreen>
         ),
         const SizedBox(height: 12),
         const Text(
-          'RFID 캐비넷에 인식해 주세요',
+          'RFID 스테이션에 인식해 주세요',
           textAlign: TextAlign.center,
           style: TextStyle(
             fontSize: 22,
@@ -117,7 +118,7 @@ class _PickupRfidScreenState extends State<PickupRfidScreen>
         ),
         const SizedBox(height: 10),
         Text(
-          '배정된 $_basketNumber번 RFID 바구니에 상품을 담아주시면\n센서가 상품의 RFID 태그를 감지하여 픽업을 완료합니다.',
+          '배정된 $_basketNumber번 RFID 스테이션에 POS기를 인식하면\n센서가 상품의 RFID 태그를 감지하여 픽업을 완료합니다.',
           textAlign: TextAlign.center,
           style: const TextStyle(
             fontSize: 13,
@@ -379,7 +380,12 @@ class _PickupRfidScreenState extends State<PickupRfidScreen>
         children: [
           // 바구니 인식 태깅 테스트용 버튼
           FilledButton(
-            onPressed: () {
+            onPressed: () async {
+              // 픽업 완료 → 스캔 로그(logs/) 전체 삭제
+              await logsRef.remove();
+              if (!mounted) {
+                return;
+              }
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
                   backgroundColor: AppTheme.statusGreen,

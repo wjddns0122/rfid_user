@@ -1,5 +1,7 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:user_rfid/screens/cart_screen.dart';
+import '../services/scan_log.dart';
 import '../theme/app_theme.dart';
 import '../widgets/hero_banner.dart';
 import '../widgets/vip_card.dart';
@@ -20,10 +22,6 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-  int _cartItemCount1 = 1;
-  int _cartItemCount2 = 1;
-  int _cartItemCount3 = 1;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -130,144 +128,152 @@ class _MainScreenState extends State<MainScreen> {
   }
 
   Widget _buildLiveCartSection() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.end,
+    return StreamBuilder<DatabaseEvent>(
+      stream: logsRef.onValue,
+      builder: (context, snapshot) {
+        final scans = parseScans(snapshot.data?.snapshot);
+        final totalPrice = scans.fold<int>(0, (sum, s) => sum + s.lineTotal);
+        final totalQty = scans.fold<int>(0, (sum, s) => sum + s.quantity);
+
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: const [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: const [
+                    Text(
+                      '라이브 카트',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: AppTheme.textMain,
+                      ),
+                    ),
+                    SizedBox(height: 2),
+                    Text(
+                      '실시간으로 담긴 상품',
+                      style: TextStyle(fontSize: 12, color: AppTheme.textHint),
+                    ),
+                  ],
+                ),
+                Stack(
+                  clipBehavior: Clip.none,
+                  children: [
+                    IconButton(
+                      icon: Icon(Icons.shopping_cart_outlined),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const CartScreen(),
+                          ),
+                        );
+                      },
+                    ), // TODO: Replace with custom SVG
+                    if (scans.isNotEmpty)
+                      Positioned(
+                        right: 0,
+                        top: 0,
+                        child: Container(
+                          padding: const EdgeInsets.all(4),
+                          decoration: const BoxDecoration(
+                            color: AppTheme.primaryDark,
+                            shape: BoxShape.circle,
+                          ),
+                          child: Text(
+                            '$totalQty',
+                            style: const TextStyle(
+                              fontSize: 9,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      ),
+                  ],
+                ),
+              ],
+            ),
+            const SizedBox(height: 16),
+            // Cart Items List (RFID 실시간 스캔 1건당 1행)
+            if (scans.isEmpty)
+              const Padding(
+                padding: EdgeInsets.symmetric(vertical: 24),
+                child: Text(
+                  '아직 인식된 상품이 없습니다.',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 12, color: AppTheme.textHint),
+                ),
+              )
+            else
+              ...scans.map(
+                (scan) => LiveCartItem(
+                  key: ValueKey('live-${scan.key}'),
+                  title: scan.name,
+                  option: scan.uid,
+                  price: formatWon(scan.price),
+                  quantity: scan.quantity,
+                  onDecrease: () {},
+                  onIncrease: () {},
+                ),
+              ),
+            const SizedBox(height: 16),
+            // Total
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
                 Text(
-                  '라이브 카트',
-                  style: TextStyle(
-                    fontSize: 18,
+                  '총 $totalQty개 상품',
+                  style: const TextStyle(
+                    fontSize: 12,
                     fontWeight: FontWeight.bold,
                     color: AppTheme.textMain,
                   ),
                 ),
-                SizedBox(height: 2),
                 Text(
-                  '실시간으로 담긴 상품',
-                  style: TextStyle(fontSize: 12, color: AppTheme.textHint),
-                ),
-              ],
-            ),
-            Stack(
-              clipBehavior: Clip.none,
-              children: [
-                const Icon(
-                  Icons.shopping_cart_outlined,
-                  size: 24,
-                ), // TODO: Replace with custom SVG
-                Positioned(
-                  right: -8,
-                  top: -8,
-                  child: Container(
-                    padding: const EdgeInsets.all(4),
-                    decoration: const BoxDecoration(
-                      color: AppTheme.primaryDark,
-                      shape: BoxShape.circle,
-                    ),
-                    child: const Text(
-                      '3',
-                      style: TextStyle(
-                        fontSize: 9,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
-                    ),
+                  formatWon(totalPrice),
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w900,
+                    color: AppTheme.textMain,
                   ),
                 ),
               ],
             ),
-          ],
-        ),
-        const SizedBox(height: 16),
-        // Cart Items List
-        LiveCartItem(
-          title: '오버핏 블레이저',
-          option: '블랙 / M',
-          price: '89,000원',
-          quantity: _cartItemCount1,
-          onDecrease: () => setState(() {
-            if (_cartItemCount1 > 1) _cartItemCount1--;
-          }),
-          onIncrease: () => setState(() => _cartItemCount1++),
-        ),
-        LiveCartItem(
-          title: '후드 스웨트셔츠',
-          option: '아이보리 / L',
-          price: '49,000원',
-          quantity: _cartItemCount2,
-          onDecrease: () => setState(() {
-            if (_cartItemCount2 > 1) _cartItemCount2--;
-          }),
-          onIncrease: () => setState(() => _cartItemCount2++),
-        ),
-        LiveCartItem(
-          title: '와이드 데님 팬츠',
-          option: '블루 / M',
-          price: '59,000원',
-          quantity: _cartItemCount3,
-          onDecrease: () => setState(() {
-            if (_cartItemCount3 > 1) _cartItemCount3--;
-          }),
-          onIncrease: () => setState(() => _cartItemCount3++),
-        ),
-        const SizedBox(height: 16),
-        // Total
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: const [
-            Text(
-              '총 3개 상품',
-              style: TextStyle(
-                fontSize: 12,
-                fontWeight: FontWeight.bold,
-                color: AppTheme.textMain,
-              ),
-            ),
-            Text(
-              '197,000원',
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w900,
-                color: AppTheme.textMain,
+            const SizedBox(height: 16),
+            // Checkout Button
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const CartScreen()),
+                );
+              },
+              child: Container(
+                width: double.infinity,
+                padding: const EdgeInsets.symmetric(vertical: 16),
+                decoration: BoxDecoration(
+                  color: AppTheme.primary,
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                alignment: Alignment.center,
+                child: const Text(
+                  '결제하기',
+                  style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
               ),
             ),
           ],
-        ),
-        const SizedBox(height: 16),
-        // Checkout Button
-        GestureDetector(
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => const CartScreen()),
-            );
-          },
-          child: Container(
-            width: double.infinity,
-            padding: const EdgeInsets.symmetric(vertical: 16),
-            decoration: BoxDecoration(
-              color: AppTheme.primary,
-              borderRadius: BorderRadius.circular(12),
-            ),
-            alignment: Alignment.center,
-            child: const Text(
-              '결제하기',
-              style: TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
-              ),
-            ),
-          ),
-        ),
-      ],
+        );
+      },
     );
   }
 

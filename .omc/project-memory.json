@@ -1,0 +1,213 @@
+{
+  "version": "1.0.0",
+  "lastScanned": 1779601214433,
+  "projectRoot": "/Users/nojeong-un/devs/rfid_user",
+  "techStack": {
+    "languages": [],
+    "frameworks": [],
+    "packageManager": null,
+    "runtime": null
+  },
+  "build": {
+    "buildCommand": null,
+    "testCommand": null,
+    "lintCommand": null,
+    "devCommand": null,
+    "scripts": {}
+  },
+  "conventions": {
+    "namingStyle": null,
+    "importStyle": null,
+    "testPattern": null,
+    "fileOrganization": null
+  },
+  "structure": {
+    "isMonorepo": false,
+    "workspaces": [],
+    "mainDirectories": [
+      "assets",
+      "lib",
+      "test"
+    ],
+    "gitBranches": {
+      "defaultBranch": "main",
+      "branchingStrategy": null
+    }
+  },
+  "customNotes": [],
+  "directoryMap": {
+    "android": {
+      "path": "android",
+      "purpose": null,
+      "fileCount": 5,
+      "lastAccessed": 1779601214429,
+      "keyFiles": [
+        "build.gradle.kts",
+        "gradle.properties",
+        "local.properties",
+        "settings.gradle.kts"
+      ]
+    },
+    "assets": {
+      "path": "assets",
+      "purpose": "Static assets",
+      "fileCount": 0,
+      "lastAccessed": 1779601214429,
+      "keyFiles": []
+    },
+    "build": {
+      "path": "build",
+      "purpose": "Build output",
+      "fileCount": 2,
+      "lastAccessed": 1779601214429,
+      "keyFiles": [
+        "89a6598c8854ed031dfc25d83c80860e.cache.dill.track.dill"
+      ]
+    },
+    "ios": {
+      "path": "ios",
+      "purpose": null,
+      "fileCount": 2,
+      "lastAccessed": 1779601214429,
+      "keyFiles": [
+        "Podfile"
+      ]
+    },
+    "lib": {
+      "path": "lib",
+      "purpose": "Library code",
+      "fileCount": 2,
+      "lastAccessed": 1779601214429,
+      "keyFiles": [
+        "firebase_options.dart",
+        "main.dart"
+      ]
+    },
+    "linux": {
+      "path": "linux",
+      "purpose": null,
+      "fileCount": 2,
+      "lastAccessed": 1779601214429,
+      "keyFiles": [
+        "CMakeLists.txt"
+      ]
+    },
+    "macos": {
+      "path": "macos",
+      "purpose": null,
+      "fileCount": 2,
+      "lastAccessed": 1779601214430,
+      "keyFiles": [
+        "Podfile"
+      ]
+    },
+    "test": {
+      "path": "test",
+      "purpose": "Test files",
+      "fileCount": 1,
+      "lastAccessed": 1779601214430,
+      "keyFiles": [
+        "widget_test.dart"
+      ]
+    },
+    "web": {
+      "path": "web",
+      "purpose": null,
+      "fileCount": 3,
+      "lastAccessed": 1779601214430,
+      "keyFiles": [
+        "favicon.png",
+        "index.html",
+        "manifest.json"
+      ]
+    },
+    "windows": {
+      "path": "windows",
+      "purpose": null,
+      "fileCount": 2,
+      "lastAccessed": 1779601214430,
+      "keyFiles": [
+        "CMakeLists.txt"
+      ]
+    },
+    "android/app": {
+      "path": "android/app",
+      "purpose": "Application code",
+      "fileCount": 2,
+      "lastAccessed": 1779601214430,
+      "keyFiles": [
+        "build.gradle.kts",
+        "google-services.json"
+      ]
+    }
+  },
+  "hotPaths": [
+    {
+      "path": "lib/screens/cart_screen.dart",
+      "accessCount": 9,
+      "lastAccessed": 1779614900949,
+      "type": "file"
+    },
+    {
+      "path": "lib/screens/main_screen.dart",
+      "accessCount": 8,
+      "lastAccessed": 1779614920775,
+      "type": "file"
+    },
+    {
+      "path": "lib/screens/pickup_rfid_screen.dart",
+      "accessCount": 4,
+      "lastAccessed": 1779603243879,
+      "type": "file"
+    },
+    {
+      "path": "test/widget_test.dart",
+      "accessCount": 3,
+      "lastAccessed": 1779603253761,
+      "type": "file"
+    },
+    {
+      "path": "lib/services/scan_log.dart",
+      "accessCount": 3,
+      "lastAccessed": 1779614883200,
+      "type": "file"
+    },
+    {
+      "path": "lib/main.dart",
+      "accessCount": 2,
+      "lastAccessed": 1779602177703,
+      "type": "file"
+    },
+    {
+      "path": "analysis_options.yaml",
+      "accessCount": 1,
+      "lastAccessed": 1779601238602,
+      "type": "file"
+    },
+    {
+      "path": "lib/theme/app_theme.dart",
+      "accessCount": 1,
+      "lastAccessed": 1779601238654,
+      "type": "file"
+    },
+    {
+      "path": "lib/widgets/custom_bottom_nav_bar.dart",
+      "accessCount": 1,
+      "lastAccessed": 1779601243096,
+      "type": "file"
+    },
+    {
+      "path": "CLAUDE.md",
+      "accessCount": 1,
+      "lastAccessed": 1779601276512,
+      "type": "file"
+    },
+    {
+      "path": "lib/widgets/live_cart_item.dart",
+      "accessCount": 1,
+      "lastAccessed": 1779603159002,
+      "type": "file"
+    }
+  ],
+  "userDirectives": []
+}

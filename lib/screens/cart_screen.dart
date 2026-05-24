@@ -1,159 +1,114 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 
 import 'payment_method_screen.dart';
+import '../services/scan_log.dart';
 import '../theme/app_theme.dart';
 import '../widgets/cart_product_item.dart';
 import '../widgets/custom_bottom_nav_bar.dart';
 
-class CartScreen extends StatefulWidget {
+class CartScreen extends StatelessWidget {
   const CartScreen({super.key});
 
   @override
-  State<CartScreen> createState() => _CartScreenState();
-}
-
-class _CartScreenState extends State<CartScreen> {
-  final List<int> _quantities = [1, 1, 1, 1];
-  final List<bool> _selectedItems = [true, true, true, true];
-
-  static const _products = [
-    _CartProductData(
-      title: '오버핏 블레이저',
-      option: '블랙 / L',
-      price: 89000,
-      icon: Icons.watch_outlined,
-    ),
-    _CartProductData(
-      title: '후드 스웨트셔츠',
-      option: '오트밀 / M',
-      price: 49000,
-      icon: Icons.checkroom_outlined,
-    ),
-    _CartProductData(
-      title: '와이드 데님 팬츠',
-      option: '블루 / M',
-      price: 59000,
-      icon: Icons.texture_outlined,
-    ),
-    _CartProductData(
-      title: '볼캡',
-      option: '블랙',
-      price: 19000,
-      icon: Icons.blur_circular_outlined,
-    ),
-  ];
-
-  int get _totalPrice {
-    var total = 0;
-    for (var index = 0; index < _products.length; index += 1) {
-      if (!_selectedItems[index]) {
-        continue;
-      }
-      total += _products[index].price * _quantities[index];
-    }
-    return total;
-  }
-
-  int get _selectedItemCount {
-    var count = 0;
-    for (var index = 0; index < _products.length; index += 1) {
-      if (_selectedItems[index]) {
-        count += _quantities[index];
-      }
-    }
-    return count;
-  }
-
-  @override
   Widget build(BuildContext context) {
-    final totalText = _formatWon(_totalPrice);
+    return StreamBuilder<DatabaseEvent>(
+      stream: logsRef.onValue,
+      builder: (context, snapshot) {
+        final scans = parseScans(snapshot.data?.snapshot);
+        final totalPrice = scans.fold<int>(0, (sum, s) => sum + s.lineTotal);
+        final totalQty = scans.fold<int>(0, (sum, s) => sum + s.quantity);
+        final totalText = formatWon(totalPrice);
+        final waiting =
+            snapshot.connectionState == ConnectionState.waiting;
 
-    return Scaffold(
-      backgroundColor: Colors.white,
-      bottomNavigationBar: CustomBottomNavBar(
-        selectedIndex: 1,
-        topChild: _CartSummaryBar(
-          itemCount: _selectedItemCount,
-          totalText: totalText,
-          onCheckout: _openPaymentMethod,
-        ),
-      ),
-      body: SafeArea(
-        bottom: false,
-        child: Column(
-          children: [
-            const _CartHeader(),
-            Expanded(
-              child: SingleChildScrollView(
-                padding: const EdgeInsets.fromLTRB(16, 12, 16, 24),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    const _RfidBanner(),
-                    const SizedBox(height: 20),
-                    const _ProductSectionHeader(),
-                    const SizedBox(height: 16),
-                    ...List.generate(_products.length, (index) {
-                      return Padding(
-                        padding: EdgeInsets.only(
-                          bottom: index == _products.length - 1 ? 0 : 24,
-                        ),
-                        child: CartProductItem(
-                          title: _products[index].title,
-                          option: _products[index].option,
-                          price: _formatWon(_products[index].price),
-                          quantity: _quantities[index],
-                          isSelected: _selectedItems[index],
-                          placeholderIcon: _products[index].icon,
-                          onToggleSelected: () => _toggleSelected(index),
-                          onDecrease: () => _decrease(index),
-                          onIncrease: () => _increase(index),
-                          checkboxKey: ValueKey('cart-item-$index-checkbox'),
-                        ),
-                      );
-                    }),
-                  ],
-                ),
-              ),
+        return Scaffold(
+          backgroundColor: Colors.white,
+          bottomNavigationBar: CustomBottomNavBar(
+            selectedIndex: 1,
+            topChild: _CartSummaryBar(
+              itemCount: totalQty,
+              totalText: totalText,
+              onCheckout: () => _openPaymentMethod(context),
             ),
-          ],
-        ),
-      ),
+          ),
+          body: SafeArea(
+            bottom: false,
+            child: Column(
+              children: [
+                const _CartHeader(),
+                Expanded(
+                  child: SingleChildScrollView(
+                    padding: const EdgeInsets.fromLTRB(16, 12, 16, 24),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        const _RfidBanner(),
+                        const SizedBox(height: 20),
+                        _ProductSectionHeader(count: scans.length),
+                        const SizedBox(height: 16),
+                        if (waiting)
+                          const Padding(
+                            padding: EdgeInsets.symmetric(vertical: 48),
+                            child: Center(child: CircularProgressIndicator()),
+                          )
+                        else if (scans.isEmpty)
+                          const _EmptyState()
+                        else
+                          ...List.generate(scans.length, (index) {
+                            final scan = scans[index];
+                            return Padding(
+                              padding: EdgeInsets.only(
+                                bottom: index == scans.length - 1 ? 0 : 24,
+                              ),
+                              child: CartProductItem(
+                                title: scan.name,
+                                option: scan.uid,
+                                price: formatWon(scan.price),
+                                quantity: scan.quantity,
+                                isSelected: true,
+                                placeholderIcon: scan.icon,
+                                onToggleSelected: () {},
+                                onDecrease: () {},
+                                onIncrease: () {},
+                                checkboxKey: ValueKey('cart-item-${scan.key}'),
+                              ),
+                            );
+                          }),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 
-  void _decrease(int index) {
-    if (_quantities[index] == 1) {
-      return;
-    }
-    setState(() => _quantities[index] -= 1);
-  }
-
-  void _increase(int index) {
-    setState(() => _quantities[index] += 1);
-  }
-
-  void _toggleSelected(int index) {
-    setState(() => _selectedItems[index] = !_selectedItems[index]);
-  }
-
-  void _openPaymentMethod() {
+  void _openPaymentMethod(BuildContext context) {
     Navigator.of(context).push(
       MaterialPageRoute(builder: (context) => const PaymentMethodScreen()),
     );
   }
+}
 
-  static String _formatWon(int value) {
-    final raw = value.toString();
-    final buffer = StringBuffer();
-    for (var index = 0; index < raw.length; index += 1) {
-      final reverseIndex = raw.length - index;
-      buffer.write(raw[index]);
-      if (reverseIndex > 1 && reverseIndex % 3 == 1) {
-        buffer.write(',');
-      }
-    }
-    return '$buffer원';
+class _EmptyState extends StatelessWidget {
+  const _EmptyState();
+
+  @override
+  Widget build(BuildContext context) {
+    return const Padding(
+      padding: EdgeInsets.symmetric(vertical: 48),
+      child: Center(
+        child: Text(
+          '아직 인식된 상품이 없습니다.\nRFID 태그를 인식해 주세요.',
+          textAlign: TextAlign.center,
+          style: TextStyle(fontSize: 14, color: AppTheme.textHint, height: 1.5),
+        ),
+      ),
+    );
   }
 }
 
@@ -249,12 +204,14 @@ class _RfidBanner extends StatelessWidget {
 }
 
 class _ProductSectionHeader extends StatelessWidget {
-  const _ProductSectionHeader();
+  final int count;
+
+  const _ProductSectionHeader({required this.count});
 
   @override
   Widget build(BuildContext context) {
     return Text(
-      '인식된 상품 (4)',
+      '인식된 상품 ($count)',
       style: Theme.of(context).textTheme.titleSmall?.copyWith(
         fontSize: 14,
         height: 20 / 14,
@@ -339,18 +296,4 @@ class _CartSummaryBar extends StatelessWidget {
       ),
     );
   }
-}
-
-class _CartProductData {
-  final String title;
-  final String option;
-  final int price;
-  final IconData icon;
-
-  const _CartProductData({
-    required this.title,
-    required this.option,
-    required this.price,
-    required this.icon,
-  });
 }
