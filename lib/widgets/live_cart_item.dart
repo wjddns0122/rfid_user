@@ -8,6 +8,7 @@ class LiveCartItem extends StatelessWidget {
   final int quantity;
   final VoidCallback onDecrease;
   final VoidCallback onIncrease;
+  final VoidCallback onDelete;
 
   const LiveCartItem({
     super.key,
@@ -17,6 +18,7 @@ class LiveCartItem extends StatelessWidget {
     required this.quantity,
     required this.onDecrease,
     required this.onIncrease,
+    required this.onDelete,
   });
 
   @override
@@ -128,7 +130,14 @@ class LiveCartItem extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: 12),
-              const Icon(Icons.delete_outline, size: 16, color: AppTheme.textHint), // TODO: Replace with custom SVG
+              InkWell(
+                onTap: onDelete,
+                customBorder: const CircleBorder(),
+                child: const Padding(
+                  padding: EdgeInsets.all(4),
+                  child: Icon(Icons.delete_outline, size: 16, color: AppTheme.textHint),
+                ),
+              ),
             ],
           ),
         ],

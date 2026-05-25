@@ -150,8 +150,8 @@
     },
     {
       "path": "lib/screens/main_screen.dart",
-      "accessCount": 8,
-      "lastAccessed": 1779614920775,
+      "accessCount": 9,
+      "lastAccessed": 1779686422636,
       "type": "file"
     },
     {
@@ -161,15 +161,21 @@
       "type": "file"
     },
     {
-      "path": "test/widget_test.dart",
-      "accessCount": 3,
-      "lastAccessed": 1779603253761,
+      "path": "lib/services/scan_log.dart",
+      "accessCount": 4,
+      "lastAccessed": 1779686403407,
       "type": "file"
     },
     {
-      "path": "lib/services/scan_log.dart",
+      "path": "lib/widgets/live_cart_item.dart",
+      "accessCount": 4,
+      "lastAccessed": 1779686417054,
+      "type": "file"
+    },
+    {
+      "path": "test/widget_test.dart",
       "accessCount": 3,
-      "lastAccessed": 1779614883200,
+      "lastAccessed": 1779603253761,
       "type": "file"
     },
     {
@@ -200,12 +206,6 @@
       "path": "CLAUDE.md",
       "accessCount": 1,
       "lastAccessed": 1779601276512,
-      "type": "file"
-    },
-    {
-      "path": "lib/widgets/live_cart_item.dart",
-      "accessCount": 1,
-      "lastAccessed": 1779603159002,
       "type": "file"
     }
   ],

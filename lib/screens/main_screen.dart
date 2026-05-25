@@ -219,6 +219,7 @@ class _MainScreenState extends State<MainScreen> {
                   quantity: scan.quantity,
                   onDecrease: () {},
                   onIncrease: () {},
+                  onDelete: () => removeScansByUid(scan.uid),
                 ),
               ),
             const SizedBox(height: 16),

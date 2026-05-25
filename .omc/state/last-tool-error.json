@@ -1,7 +1,0 @@
-{
-  "tool_name": "Bash",
-  "tool_input_preview": "{\"command\":\"echo \\\"---LIB TREE---\\\" && find lib -type f | sort && echo \\\"---CURSOR---\\\" && (cat .cursorrules 2>/dev/null; ls .cursor/rules/ 2>/dev/null; cat .github/copilot-instructions.md 2>/dev/null...",
-  "error": "Exit code 1\n---LIB TREE---\nlib/firebase_options.dart\nlib/main.dart\nlib/screens/cart_screen.dart\nlib/screens/delivery_tracking_screen.dart\nlib/screens/main_screen.dart\nlib/screens/nfc_recognize_screen.dart\nlib/screens/order_complete_screen.dart\nlib/screens/payment_method_screen.dart\nlib/screens/pickup_delivery_screen.dart\nlib/screens/pickup_detail_screen.dart\nlib/screens/pickup_rfid_screen.dart\nlib/screens/profile_screen.dart\nlib/screens/scan_screen.dart\nlib/screens/station_recognize_complete_scr...",
-  "timestamp": "2026-05-24T05:40:32.820Z",
-  "retry_count": 1
-}

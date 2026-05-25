@@ -57,6 +57,26 @@ List<ScanItem> parseScans(DataSnapshot? snapshot) {
   return items;
 }
 
+/// 해당 UID로 쌓인 logs/ 항목 전부 삭제 (라이브 카트 휴지통 버튼).
+Future<void> removeScansByUid(String uid) async {
+  final target = uid.toUpperCase();
+  final snapshot = await logsRef.get();
+  final updates = <String, Object?>{};
+  for (final child in snapshot.children) {
+    final value = child.value;
+    if (value is! Map) {
+      continue;
+    }
+    final childUid = (value['uid'] ?? '').toString().toUpperCase();
+    if (childUid == target) {
+      updates[child.key!] = null;
+    }
+  }
+  if (updates.isNotEmpty) {
+    await logsRef.update(updates);
+  }
+}
+
 class CatalogEntry {
   final String name;
   final int price;
