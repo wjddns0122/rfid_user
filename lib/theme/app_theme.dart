@@ -67,10 +67,18 @@ class AppTheme {
   static String getProductImageUrl(String title) {
     if (title.contains('해링턴')) {
       return 'https://media.bunjang.co.kr/product/303934322_1_1733212719_w360.jpg';
-    } else if (title.contains('과잠') || title.contains('대의원')) {
-      return 'assets/images/real_image/jumper.jpg';
     } else if (title.contains('Jordan') || title.contains('신발') || title.contains('스니커')) {
       return 'assets/images/real_image/jordan.jpg';
+    } else if (title.contains('흰 반팔')) {
+      return 'assets/images/real_image/white_shirt.jpeg';
+    } else if (title.contains('오아시스')) {
+      return 'assets/images/real_image/oasis_shirt.jpg';
+    } else if (title.contains('벨리에') || title.contains('청셔츠')) {
+      return 'assets/images/real_image/black_white_shirt.jpg';
+    } else if (title.contains('슈프림')) {
+      return 'assets/images/real_image/supreme_cap.jpeg';
+    } else if (title.contains('갭 모자')) {
+      return 'assets/images/real_image/gap_cap.jpeg';
     } else if (title.contains('블레이저') ||
         title.contains('재킷') ||
         title.contains('자켓') ||

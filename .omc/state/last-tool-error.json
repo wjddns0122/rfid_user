@@ -1,7 +1,0 @@
-{
-  "tool_name": "Bash",
-  "tool_input_preview": "{\"command\":\"ls -la /Users/nojeong-un/devs/rfid_user/assets/images/real_images/ 2>&1\",\"description\":\"List real_images assets\"}",
-  "error": "Exit code 1\nls: /Users/nojeong-un/devs/rfid_user/assets/images/real_images/: No such file or directory",
-  "timestamp": "2026-05-25T15:04:42.953Z",
-  "retry_count": 1
-}

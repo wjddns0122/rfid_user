@@ -4,24 +4,20 @@ import 'package:flutter/material.dart';
 /// 카드 UID → 상품 정보 매핑. 새 태그 추가 시 여기에 등록.
 /// ESP32가 UID를 대문자로 전송하므로 키도 대문자로 둔다.
 const Map<String, CatalogEntry> catalogByUid = {
-  'D6A32907': CatalogEntry('오버핏 블레이저', 89000, Icons.checkroom_outlined),
-  'E9920207': CatalogEntry('후드 스웨트셔츠', 49000, Icons.dry_cleaning_outlined),
-  '57E02107': CatalogEntry('와이드 데님 팬츠', 59000, Icons.texture_outlined),
-  '3D06CC06': CatalogEntry('볼캡', 19000, Icons.sports_baseball_outlined),
-  '85302B80': CatalogEntry('폴로 해링턴 자켓', 200000, Icons.checkroom_outlined),
-  'DD5E2B80': CatalogEntry('인덕대 대의원회 과잠', 100000, Icons.school_outlined),
-  '875E2B80': CatalogEntry(
+  '255D2B80': CatalogEntry(
     'Jordan 1 Retro Storm Blue',
     320000,
     Icons.ice_skating_outlined,
   ),
+  '275D2B80': CatalogEntry('흰 반팔', 25000, Icons.checkroom_outlined),
+  'DD5E2B80': CatalogEntry('오아시스 반팔', 50000, Icons.checkroom_outlined),
+  '875E2B80': CatalogEntry('벨리에 청셔츠', 100000, Icons.checkroom_outlined),
+  'FB522B80': CatalogEntry('슈프림 모자', 80000, Icons.sports_baseball_outlined),
+  'FD522B80': CatalogEntry('갭 모자', 30000, Icons.sports_baseball_outlined),
+  '85302B80': CatalogEntry('폴로 해링턴 자켓', 200000, Icons.checkroom_outlined),
 };
 
-const CatalogEntry unknownEntry = CatalogEntry(
-  '미등록 태그',
-  0,
-  Icons.help_outline,
-);
+const CatalogEntry unknownEntry = CatalogEntry('미등록 태그', 0, Icons.help_outline);
 
 /// RFID 스캔 로그가 쌓이는 Realtime DB 경로.
 DatabaseReference get logsRef => FirebaseDatabase.instance.ref('logs');
@@ -43,8 +39,9 @@ List<ScanItem> parseScans(DataSnapshot? snapshot) {
     if (existing != null) {
       byUid[uid] = existing.copyWith(
         quantity: existing.quantity + 1,
-        timestamp:
-            timestamp < existing.timestamp ? timestamp : existing.timestamp,
+        timestamp: timestamp < existing.timestamp
+            ? timestamp
+            : existing.timestamp,
       );
       continue;
     }
