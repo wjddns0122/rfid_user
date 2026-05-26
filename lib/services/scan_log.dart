@@ -8,6 +8,13 @@ const Map<String, CatalogEntry> catalogByUid = {
   'E9920207': CatalogEntry('후드 스웨트셔츠', 49000, Icons.dry_cleaning_outlined),
   '57E02107': CatalogEntry('와이드 데님 팬츠', 59000, Icons.texture_outlined),
   '3D06CC06': CatalogEntry('볼캡', 19000, Icons.sports_baseball_outlined),
+  '85302B80': CatalogEntry('폴로 해링턴 자켓', 200000, Icons.checkroom_outlined),
+  'DD5E2B80': CatalogEntry('인덕대 대의원회 과잠', 100000, Icons.school_outlined),
+  '875E2B80': CatalogEntry(
+    'Jordan 1 Retro Storm Blue',
+    320000,
+    Icons.ice_skating_outlined,
+  ),
 };
 
 const CatalogEntry unknownEntry = CatalogEntry(

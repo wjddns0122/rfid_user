@@ -27,8 +27,8 @@ class RecommendedProductCard extends StatelessWidget {
               border: Border.all(color: AppTheme.borderGray),
             ),
             clipBehavior: Clip.antiAlias,
-            child: Image.network(
-              AppTheme.getProductImageUrl(title),
+            child: Image(
+              image: AppTheme.productImageProvider(title),
               fit: BoxFit.cover,
               loadingBuilder: (context, child, loadingProgress) {
                 if (loadingProgress == null) return child;

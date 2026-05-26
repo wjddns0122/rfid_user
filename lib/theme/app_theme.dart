@@ -65,7 +65,16 @@ class AppTheme {
   }
 
   static String getProductImageUrl(String title) {
-    if (title.contains('블레이저') || title.contains('재킷') || title.contains('아우터')) {
+    if (title.contains('해링턴')) {
+      return 'https://media.bunjang.co.kr/product/303934322_1_1733212719_w360.jpg';
+    } else if (title.contains('과잠') || title.contains('대의원')) {
+      return 'assets/images/real_image/jumper.jpg';
+    } else if (title.contains('Jordan') || title.contains('신발') || title.contains('스니커')) {
+      return 'assets/images/real_image/jordan.jpg';
+    } else if (title.contains('블레이저') ||
+        title.contains('재킷') ||
+        title.contains('자켓') ||
+        title.contains('아우터')) {
       return 'https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=500';
     } else if (title.contains('후드') || title.contains('스웨트셔츠') || title.contains('티셔츠')) {
       return 'https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=500';
@@ -76,5 +85,14 @@ class AppTheme {
     }
     // Fallback general clothing image
     return 'https://images.unsplash.com/photo-1489987707025-afc232f7ea0f?w=500';
+  }
+
+  /// asset 경로면 AssetImage, 아니면 NetworkImage. 호출부 Image(image:)에 사용.
+  static ImageProvider productImageProvider(String title) {
+    final src = getProductImageUrl(title);
+    if (src.startsWith('assets/')) {
+      return AssetImage(src);
+    }
+    return NetworkImage(src);
   }
 }

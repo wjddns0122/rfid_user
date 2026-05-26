@@ -140,7 +140,7 @@ class _ProductImagePlaceholder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final imageUrl = AppTheme.getProductImageUrl(title);
+    final imageProvider = AppTheme.productImageProvider(title);
     return Container(
       width: 80,
       height: 96,
@@ -149,8 +149,8 @@ class _ProductImagePlaceholder extends StatelessWidget {
         borderRadius: BorderRadius.circular(6),
       ),
       clipBehavior: Clip.antiAlias,
-      child: Image.network(
-        imageUrl,
+      child: Image(
+        image: imageProvider,
         fit: BoxFit.cover,
         loadingBuilder: (context, child, loadingProgress) {
           if (loadingProgress == null) return child;
